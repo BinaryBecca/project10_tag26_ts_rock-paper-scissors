@@ -74,25 +74,46 @@ function choosingTheWinner(playersChosenOption: HTMLImageElement, computersChose
 // calling on functions getRandomIconforComputer() + choosingTheWinner()
 // showing chosen icon in player + computer
 // #zufällig generiertes image für computer
-const computerImage = getRandomIconforComputer()
+// const computerImage = getRandomIconforComputer()
 // # img von btn für player
-const playerImage = document.querySelector("img") as HTMLImageElement
+// const playerImage = document.querySelector("img") as HTMLImageElement
+
+// allButtons.forEach((button) => {
+//   button.addEventListener("click", () => {
+//     if (computer && player) {
+//       // #zufällig generiertes image für computer
+//       const computerImage = getRandomIconforComputer()
+//       // # img von btn für player
+//       const playerImage = button.querySelector("img") as HTMLImageElement
+
+//       // #img in player & computer anzeigen
+//       // ! Problem innerHTML = string!
+//       // ! computerImage, playerImage HTMLImageElement
+//       // computer.innerHTML = computerImage
+//       // player.innerHTML = playerImage
+
+//       computer.appendChild(computerImage).cloneNode(true)
+//       player.appendChild(playerImage).cloneNode(true)
+
+//       // let p = document.getElementById("para1");
+//       // let p_prime = p.cloneNode(true);
+
+//       // #Gewinner ermitteln
+//       choosingTheWinner(computerImage, playerImage)
+//     }
+//   })
+// })
 
 allButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    console.log(computerImage)
-    if (computer && player) {
-      // #img in player & computer anzeigen
-      // ! Problem innerHTML = string!
-      // ! computerImage, playerImage HTMLImageElement
-      computer.innerHTML = computerImage
-      player.innerHTML = playerImage
+    const copyScissorImage = scissorImage.cloneNode()
+    const copyImageComputer = getRandomIconforComputer().cloneNode()
+    const playerImage = document.querySelector("img") as HTMLImageElement
+    if (player && computer) {
+      player.append(copyScissorImage)
+      computer.append(copyImageComputer)
 
-      // computer.appendChild(computerImage)
-      // player.appendChild(playerImage)
-
-      // #Gewinner ermitteln
-      choosingTheWinner(computerImage, playerImage)
+      choosingTheWinner(copyImageComputer, playerImage)
     }
   })
 })
