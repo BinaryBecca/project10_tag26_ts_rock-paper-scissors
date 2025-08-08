@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project-TS Rock, Paper, Scissors</title>
+  </head>
+  <body>
+    <div id="box1">
+      <form id="choooseRoundOption">
+        <legend>How many rounds?</legend>
+
+        <input type="radio" name="rounds" id="roundsOption5" value="5" checked />
+        <label for="roundsOption5">5</label>
+
+        <input type="radio" name="rounds" id="roundsOption10" value="10" />
+        <label for="roundsOption10">10</label>
+
+        <input type="radio" name="rounds" id="roundsOption15" value="15" />
+        <label for="roundsOption15">15</label>
+
+        <input type="radio" name="rounds" id="roundsOption1" value="20" />
+        <label for="roundsOption20">20</label>
+      </form>
+
+      <div id="roundCounter"></div>
+    </div>
+
+    <div id="box2">
+      <div id="player" class="roundbox"><p>You</p></div>
+      <div id="score"></div>
+      <div id="computer" class="roundbox"><p>Computer</p></div>
+    </div>
+
+    <div id="box3">
+      <div id="scoreResult">Let's play</div>
+    </div>
+
+    <div id="box4">
+      <div class="buttonStyling">
+        <button type="button" id="stoneButton" class="iconButtons">
+          <img src="./src/img/stone.png" id="stoneImage" alt="stone icon" />
+        </button>
+      </div>
+
+      <div class="buttonStyling">
+        <button type="button" id="paperButton" class="iconButtons">
+          <img src="./src/img/paper.png" id="paperImage" alt="paper icon" />
+        </button>
+      </div>
+
+      <div class="buttonStyling">
+        <button type="button" id="scissorButton" class="iconButtons">
+          <img src="./src/img/scissor.png" id="scissorImage" alt="scissor icon" />
+        </button>
+      </div>
+
+      <p>MAKE YOUR MOVE</p>
+    </div>
+
+    <!-- <div id="box5">
+      <div id="movingHand"><img src="./src/img/hand_down.png" alt="hand showing down" /></div>
+      <a href="">restart</a>
+    </div> -->
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
