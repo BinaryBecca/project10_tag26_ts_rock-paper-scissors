@@ -11,11 +11,12 @@ const chosenRadioButton = chooseRoundOption.querySelectorAll<HTMLInputElement>('
 
 const allButtons = document.querySelectorAll<HTMLDivElement>(".iconButtons")
 
-// const stone = document.getElementById("stoneButton") as HTMLButtonElement
-// const paper = document.getElementById("paperButton") as HTMLButtonElement
-// const scissor = document.getElementById("scissorButton") as HTMLButtonElement
+const stoneButton = document.getElementById("stoneButton") as HTMLButtonElement
+// const paperButton = document.getElementById("paperButton") as HTMLButtonElement
+// const scissorButton = document.getElementById("scissorButton") as HTMLButtonElement
 
 const stoneImage = document.getElementById("stoneImage") as HTMLImageElement
+const bobTheStoneImage = document.getElementById("bobTheStoneImage") as HTMLImageElement
 const paperImage = document.getElementById("paperImage") as HTMLImageElement
 const scissorImage = document.getElementById("scissorImage") as HTMLImageElement
 const iconOptions = [stoneImage, paperImage, scissorImage]
@@ -37,6 +38,7 @@ let selectedRoundOption = 0
 //#Choosing number of rounds
 playingTheGame.style.display = "none"
 restartSection.style.display = "none"
+bobTheStoneImage.style.display = "none"
 // chooseRoundOption.style.display = "flex"
 
 chosenRadioButton.forEach((radioButton) => {
@@ -56,6 +58,17 @@ function getRandomIconforComputer(): HTMLImageElement {
   return iconOptions[Math.floor(Math.random() * iconOptions.length)]
 }
 
+// #function getBobAtRandom()
+const randomImage = [stoneImage, bobTheStoneImage]
+function getBobAtRandom(): HTMLImageElement {
+  return randomImage[Math.floor(Math.random() * randomImage.length)]
+}
+// #Bob
+// stoneButton.addEventListener("click", () => {
+//   const randomStoneImage = getBobAtRandom().cloneNode() as HTMLImageElement
+//   player.append(randomStoneImage)
+// })
+
 // # choosing winner, showing current score
 allButtons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -63,7 +76,11 @@ allButtons.forEach((button) => {
     computer.innerHTML = ""
 
     const copyImageComputer = getRandomIconforComputer().cloneNode() as HTMLImageElement
-    const playerImage = button.querySelector("img").cloneNode() as HTMLImageElement
+    let playerImage = button.querySelector("img").cloneNode() as HTMLImageElement
+    // const randomStoneImage = getBobAtRandom().cloneNode() as HTMLImageElement
+    // if (button === stoneButton) {
+    //   playerImage = getBobAtRandom().cloneNode() as HTMLImageElement
+    // }
 
     player.append(playerImage)
     computer.append(copyImageComputer)
@@ -73,9 +90,9 @@ allButtons.forEach((button) => {
       // ! <img src="${playerImage.src}"> für Bild!!!
       scoreResult.innerHTML = `It was a draw! You both chose <img src="${playerImage.src}">`
     } else if (
-      (playerImage.src === stoneImage.src && copyImageComputer.src === scissorImage.src) ||
+      (playerImage.src === randomStoneImage.src && copyImageComputer.src === scissorImage.src) ||
       (playerImage.src === scissorImage.src && copyImageComputer.src === paperImage.src) ||
-      (playerImage.src === paperImage.src && copyImageComputer.src === stoneImage.src)
+      (playerImage.src === paperImage.src && copyImageComputer.src === randomStoneImage.src)
     ) {
       playerScoreOfCurrentRound++
       scoreResult.innerHTML = `<img src="${playerImage.src}"> beats <img src="${copyImageComputer.src}">. You win!`

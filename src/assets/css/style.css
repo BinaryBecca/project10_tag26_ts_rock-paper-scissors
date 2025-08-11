@@ -40,8 +40,9 @@ body {
 }
 
 #choooseRoundOption img,
-#playingTheGame img {
-  max-height: 150px;
+#playingTheGame img,
+#bobTheStoneImage {
+  max-height: 80px;
 }
 
 .buttonStyling button:hover {
@@ -90,4 +91,8 @@ body {
 
 #restartButton {
   background: transparent;
+}
+
+#bobTheStoneImage {
+  height: 80px;
 }
