@@ -1,0 +1,93 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@font-face {
+  font-family: "IndieFlower";
+  src: url("../fonts/IndieFlower.ttf");
+}
+
+body {
+  background: url("../img/background_paper-texture.jpg") no-repeat center/cover;
+  font-family: "IndieFlower", Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  color: black;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+#roundCounter,
+#playersSection,
+#scoreResultSection,
+#iconOptionsSection,
+#restartSection {
+  border: 1px solid black;
+  margin-bottom: 10px;
+}
+
+#choooseRoundOption h1 {
+  font-size: 3rem;
+}
+#choooseRoundOption legend {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+#choooseRoundOption img,
+#playingTheGame img {
+  max-height: 150px;
+}
+
+.buttonStyling button:hover {
+  cursor: pointer;
+}
+
+#choooseRoundOption input[type="radio"] {
+  appearance: none;
+  background: transparent;
+  border: 2px solid black;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+}
+
+#choooseRoundOption input[type="radio"]:hover {
+  cursor: pointer;
+}
+
+#choooseRoundOption label {
+  font-size: 2rem;
+  margin-right: 1rem;
+}
+
+.buttonStyling button {
+  background: transparent;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+#playersSection,
+#iconOptionsSection {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#player,
+#computer {
+  border: 1px solid black;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+#restartButton {
+  background: transparent;
+}

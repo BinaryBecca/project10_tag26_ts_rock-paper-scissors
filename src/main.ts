@@ -1,4 +1,4 @@
-import "./style.css"
+import "./assets/css/style.css"
 
 //#Variables
 const everythingInsideTheGame = document.getElementById("everythingInsideTheGame") as HTMLDivElement
@@ -26,6 +26,9 @@ const score = document.getElementById("score") as HTMLDivElement
 
 const scoreResult = document.getElementById("scoreResult") as HTMLDivElement
 
+const restartSection = document.getElementById("restartSection") as HTMLDivElement
+const restartButton = document.getElementById("restartButton") as HTMLButtonElement
+
 let playerScoreOfCurrentRound = 0
 let computereScoreOfCurrentRound = 0
 let currentRound = 0
@@ -33,6 +36,7 @@ let selectedRoundOption = 0
 
 //#Choosing number of rounds
 playingTheGame.style.display = "none"
+restartSection.style.display = "none"
 // chooseRoundOption.style.display = "flex"
 
 chosenRadioButton.forEach((radioButton) => {
@@ -42,6 +46,7 @@ chosenRadioButton.forEach((radioButton) => {
     selectedRoundOption = Number(radioButton.value)
     chooseRoundOption.style.display = "none"
     playingTheGame.style.display = "block"
+    restartSection.style.display = "block"
     roundCounter.textContent = `${currentRound} / ${selectedRoundOption}`
   })
 })
@@ -80,10 +85,11 @@ allButtons.forEach((button) => {
     }
     score.textContent = playerScoreOfCurrentRound + ":" + computereScoreOfCurrentRound
 
-    // #showing current round, showing the end result
+    // #showing current round
     currentRound++
     roundCounter.textContent = `${currentRound} / ${selectedRoundOption}`
 
+    // # showing the end result
     if (selectedRoundOption === currentRound) {
       everythingInsideTheGame.style.display = "none"
 
@@ -96,6 +102,13 @@ allButtons.forEach((button) => {
       }
     }
   })
+})
+
+// # restart game
+restartButton.addEventListener("click", (event) => {
+  event.preventDefault()
+
+  window.location.reload()
 })
 
 //
