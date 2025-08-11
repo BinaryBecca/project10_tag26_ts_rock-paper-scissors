@@ -1,30 +1,13 @@
-//#✅ Choosing number of rounds_#box1
-// #🟥 number of rounds = value  of radio btn!
-// #🟥 box1: Showing the current round number
+import "./style.css"
+
+//#Variables
+const everythingInsideTheGame = document.getElementById("everythingInsideTheGame") as HTMLDivElement
+const playingTheGame = document.getElementById("playingTheGame") as HTMLDivElement
+const endResult = document.getElementById("endResult") as HTMLDivElement
+
 const roundCounter = document.getElementById("roundCounter") as HTMLDivElement
 const chooseRoundOption = document.getElementById("choooseRoundOption") as HTMLFormElement
-
 const chosenRadioButton = chooseRoundOption.querySelectorAll<HTMLInputElement>('input[type="radio"]') //as HTMLInputElement
-
-chosenRadioButton.forEach((radioButton) => {
-  const optionSelected = radioButton.value
-
-  radioButton.addEventListener("click", () => {
-    chooseRoundOption.style.display = "none"
-    roundCounter.textContent = `0 / ${optionSelected}`
-    //# 🟥 add number of rounds left to /
-    //# 🟥 Optional: add blinking icons to show user, where to click
-  })
-})
-
-// # Results1: #box2:
-// #✅ choose random icon for computer
-// #✅ making rules (scissor beats paper, paper beats stone, stone beats scissor)
-// #✅ Showing the current score (1:1)
-// #✅ box3: Showing the result in text-format:
-// option1: ${icon} beats ${icon}. You win!
-// option2: It was a draw! You both chose ${icon}
-// option3: ${icon} beats ${icon}. You lose!
 
 const allButtons = document.querySelectorAll<HTMLDivElement>(".iconButtons")
 
@@ -35,6 +18,7 @@ const allButtons = document.querySelectorAll<HTMLDivElement>(".iconButtons")
 const stoneImage = document.getElementById("stoneImage") as HTMLImageElement
 const paperImage = document.getElementById("paperImage") as HTMLImageElement
 const scissorImage = document.getElementById("scissorImage") as HTMLImageElement
+const iconOptions = [stoneImage, paperImage, scissorImage]
 
 const player = document.getElementById("player") as HTMLDivElement
 const computer = document.getElementById("computer") as HTMLDivElement
@@ -42,78 +26,121 @@ const score = document.getElementById("score") as HTMLDivElement
 
 const scoreResult = document.getElementById("scoreResult") as HTMLDivElement
 
-const iconOptions = [stoneImage, paperImage, scissorImage]
+let playerScoreOfCurrentRound = 0
+let computereScoreOfCurrentRound = 0
+let currentRound = 0
+let selectedRoundOption = 0
+
+//#Choosing number of rounds
+playingTheGame.style.display = "none"
+// chooseRoundOption.style.display = "flex"
+
+chosenRadioButton.forEach((radioButton) => {
+  // selectedRoundOption = Number(radioButton.value)
+
+  radioButton.addEventListener("click", () => {
+    selectedRoundOption = Number(radioButton.value)
+    chooseRoundOption.style.display = "none"
+    playingTheGame.style.display = "block"
+    roundCounter.textContent = `${currentRound} / ${selectedRoundOption}`
+  })
+})
 
 // #function getRandomIconforComputer()
 function getRandomIconforComputer(): HTMLImageElement {
   return iconOptions[Math.floor(Math.random() * iconOptions.length)]
 }
 
-let playerScoreOfCurrentRound = 0
-let computereScoreOfCurrentRound = 0
-
-function choosingTheWinner(playersChosenOption: HTMLImageElement, computersChosenOption: HTMLImageElement) {
-  if (playersChosenOption === computersChosenOption) {
-    scoreResult.textContent = `It was a draw! You both chose ${playersChosenOption}`
-  } else if (
-    (playersChosenOption === stoneImage && computersChosenOption === scissorImage) ||
-    (playersChosenOption === scissorImage && computersChosenOption === paperImage) ||
-    (playersChosenOption === paperImage && computersChosenOption === stoneImage)
-  ) {
-    playerScoreOfCurrentRound++
-    scoreResult.textContent = `${playersChosenOption} beats ${computersChosenOption}. You win!`
-  } else {
-    computereScoreOfCurrentRound++
-    scoreResult.textContent = `${computersChosenOption} beats ${playersChosenOption}. You lose!`
-  }
-  score.textContent = playerScoreOfCurrentRound + ":" + computereScoreOfCurrentRound
-}
-
-// # Results2:
-// #🟥 making sure, that if button (stone, paper, scissor) is clicked (addeventlistener), the following is happening:
-// calling on functions getRandomIconforComputer() + choosingTheWinner()
-// showing chosen icon in player + computer
-// #zufällig generiertes image für computer
-// const computerImage = getRandomIconforComputer()
-// # img von btn für player
-// const playerImage = document.querySelector("img") as HTMLImageElement
-
-// allButtons.forEach((button) => {
-//   button.addEventListener("click", () => {
-//     if (computer && player) {
-//       // #zufällig generiertes image für computer
-//       const computerImage = getRandomIconforComputer()
-//       // # img von btn für player
-//       const playerImage = button.querySelector("img") as HTMLImageElement
-
-//       // #img in player & computer anzeigen
-//       // ! Problem innerHTML = string!
-//       // ! computerImage, playerImage HTMLImageElement
-//       // computer.innerHTML = computerImage
-//       // player.innerHTML = playerImage
-
-//       computer.appendChild(computerImage).cloneNode(true)
-//       player.appendChild(playerImage).cloneNode(true)
-
-//       // let p = document.getElementById("para1");
-//       // let p_prime = p.cloneNode(true);
-
-//       // #Gewinner ermitteln
-//       choosingTheWinner(computerImage, playerImage)
-//     }
-//   })
-// })
-
+// # choosing winner, showing current score
 allButtons.forEach((button) => {
   button.addEventListener("click", () => {
-    const copyScissorImage = scissorImage.cloneNode()
-    const copyImageComputer = getRandomIconforComputer().cloneNode()
-    const playerImage = document.querySelector("img") as HTMLImageElement
-    if (player && computer) {
-      player.append(copyScissorImage)
-      computer.append(copyImageComputer)
+    player.innerHTML = ""
+    computer.innerHTML = ""
 
-      choosingTheWinner(copyImageComputer, playerImage)
+    const copyImageComputer = getRandomIconforComputer().cloneNode() as HTMLImageElement
+    const playerImage = button.querySelector("img").cloneNode() as HTMLImageElement
+
+    player.append(playerImage)
+    computer.append(copyImageComputer)
+    // ! playerImage === stoneImage ist immer false, weil playerImage ein Klon ist und stoneImage das Original
+    // !  src = string mit Bild-URL
+    if (playerImage.src === copyImageComputer.src) {
+      // ! <img src="${playerImage.src}"> für Bild!!!
+      scoreResult.innerHTML = `It was a draw! You both chose <img src="${playerImage.src}">`
+    } else if (
+      (playerImage.src === stoneImage.src && copyImageComputer.src === scissorImage.src) ||
+      (playerImage.src === scissorImage.src && copyImageComputer.src === paperImage.src) ||
+      (playerImage.src === paperImage.src && copyImageComputer.src === stoneImage.src)
+    ) {
+      playerScoreOfCurrentRound++
+      scoreResult.innerHTML = `<img src="${playerImage.src}"> beats <img src="${copyImageComputer.src}">. You win!`
+    } else {
+      computereScoreOfCurrentRound++
+      scoreResult.innerHTML = `<img src="${copyImageComputer.src}"> beats <img src="${playerImage.src}">. You lose!`
+    }
+    score.textContent = playerScoreOfCurrentRound + ":" + computereScoreOfCurrentRound
+
+    // #showing current round, showing the end result
+    currentRound++
+    roundCounter.textContent = `${currentRound} / ${selectedRoundOption}`
+
+    if (selectedRoundOption === currentRound) {
+      everythingInsideTheGame.style.display = "none"
+
+      if (playerScoreOfCurrentRound > computereScoreOfCurrentRound) {
+        return (endResult.innerText = "You won!")
+      } else if (playerScoreOfCurrentRound < computereScoreOfCurrentRound) {
+        return (endResult.innerText = "You lost!")
+      } else {
+        return (endResult.innerText = "It's a draw!")
+      }
     }
   })
 })
+
+//
+//
+//
+//
+//
+//
+// # function choosingTheWinner()
+// let playerScoreOfCurrentRound = 0
+// let computereScoreOfCurrentRound = 0
+
+// function choosingTheWinner(playersChosenOption: HTMLImageElement, computersChosenOption: HTMLImageElement) {
+//   if (playersChosenOption === computersChosenOption) {
+//     scoreResult.textContent = `It was a draw! You both chose ${playersChosenOption}`
+//   } else if (
+//     (playersChosenOption === stoneImage && computersChosenOption === scissorImage) ||
+//     (playersChosenOption === scissorImage && computersChosenOption === paperImage) ||
+//     (playersChosenOption === paperImage && computersChosenOption === stoneImage)
+//   ) {
+//     playerScoreOfCurrentRound++
+//     scoreResult.textContent = `${playersChosenOption} beats ${computersChosenOption}. You win!`
+//   } else {
+//     computereScoreOfCurrentRound++
+//     scoreResult.textContent = `${computersChosenOption} beats ${playersChosenOption}. You lose!`
+//   }
+//   score.textContent = playerScoreOfCurrentRound + ":" + computereScoreOfCurrentRound
+// }
+
+// # Results2:
+// const copyImageComputer = getRandomIconforComputer().cloneNode() as HTMLImageElement
+// const playerImage = document.querySelector("img").cloneNode() as HTMLImageElement
+// document = immer nur erstes img
+
+// allButtons.forEach((button) => {
+//   button.addEventListener("click", () => {
+//     player.innerHTML = ""
+//     computer.innerHTML = ""
+
+//     const copyImageComputer = getRandomIconforComputer().cloneNode() as HTMLImageElement
+//     const playerImage = button.querySelector("img").cloneNode() as HTMLImageElement
+
+//     player.append(playerImage)
+//     computer.append(copyImageComputer)
+
+//     choosingTheWinner(playerImage, copyImageComputer)
+//   })
+// })
